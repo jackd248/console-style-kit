@@ -214,6 +214,23 @@ class LoadingElement extends AbstractStyleElement
         return $this->isRunning;
     }
 
+    public function toString(): string
+    {
+        // For LoadingElement, return a single frame representation
+        // since full animation doesn't make sense in string form
+        $chars = $this->charSet->getChars();
+        $char = $chars[0]; // Use first character
+        $dots = $this->showDots ? '…' : '';
+        $output = "{$char} {$this->text} {$dots}";
+
+        if ($this->color) {
+            // For string output, we include the color tags but they won't be rendered
+            $output = "<fg={$this->color}>{$output}</fg={$this->color}>";
+        }
+
+        return $output;
+    }
+
     public function render(?int $duration = null): void
     {
         if (null !== $duration) {

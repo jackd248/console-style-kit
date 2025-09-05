@@ -23,7 +23,6 @@ namespace ConsoleStyleKit\Contracts;
 
 use Symfony\Component\Console\Style\SymfonyStyle;
 
-
 /**
  * StyleElementInterface.
  *
@@ -35,4 +34,6 @@ interface StyleElementInterface
     public function __construct(SymfonyStyle $style);
 
     public function render(): void;
+
+    public function toString(): string;
 }

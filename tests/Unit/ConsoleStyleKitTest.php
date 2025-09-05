@@ -49,7 +49,6 @@ class ConsoleStyleKitTest extends TestCase
         $this->style = new ConsoleStyleKit(new ArrayInput([]), $this->output);
     }
 
-
     public function testLegacyBlockquote(): void
     {
         $this->style->blockquote('Test message');

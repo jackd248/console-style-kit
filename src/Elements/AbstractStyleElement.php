@@ -30,9 +30,31 @@ use Symfony\Component\Console\Style\SymfonyStyle;
  * @author Konrad Michalik <hej@konradmichalik.dev>
  * @license GPL-3.0-or-later
  */
-abstract class AbstractStyleElement implements StyleElementInterface
+abstract class AbstractStyleElement implements StyleElementInterface, \Stringable
 {
     public function __construct(protected SymfonyStyle $style) {}
+
+    public function toString(): string
+    {
+        // Create a temporary BufferedOutput to capture the rendered output
+        $tempOutput = new \Symfony\Component\Console\Output\BufferedOutput();
+        $tempStyle = new SymfonyStyle(
+            new \Symfony\Component\Console\Input\ArrayInput([]),
+            $tempOutput,
+        );
+
+        // Create a temporary instance with the BufferedOutput
+        $tempElement = clone $this;
+        $tempElement->style = $tempStyle;
+        $tempElement->render();
+
+        return $tempOutput->fetch();
+    }
+
+    public function __toString(): string
+    {
+        return $this->toString();
+    }
 
     protected function getTerminalWidth(): int
     {
