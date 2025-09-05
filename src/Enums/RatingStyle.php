@@ -21,7 +21,6 @@
 
 namespace ConsoleStyleKit\Enums;
 
-
 /**
  * RatingStyle.
  *
