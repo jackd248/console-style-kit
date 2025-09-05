@@ -49,9 +49,9 @@ class BadgeElement extends AbstractStyleElement
         return $this;
     }
 
-    public static function create(SymfonyStyle $style, string $text, BadgeColor|string $color = BadgeColor::GRAY): self
+    public static function create(SymfonyStyle $style, string $text, BadgeColor|string $color = BadgeColor::GRAY, bool $verboseOnly = false): self
     {
-        return (new self($style))
+        return (new self($style, $verboseOnly))
             ->setText($text)
             ->setColor($color);
     }

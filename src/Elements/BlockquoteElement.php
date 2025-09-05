@@ -64,9 +64,9 @@ class BlockquoteElement extends AbstractStyleElement
         }
     }
 
-    public static function create(SymfonyStyle $style, string $text, BlockquoteType|string|null $type = null): self
+    public static function create(SymfonyStyle $style, string $text, BlockquoteType|string|null $type = null, bool $verboseOnly = false): self
     {
-        return (new self($style))
+        return (new self($style, $verboseOnly))
             ->setText($text)
             ->setType($type);
     }

@@ -101,65 +101,6 @@ class ConsoleStyleKitTest extends TestCase
         $this->assertStringContainsString('Test', $output);
     }
 
-    public function testCreateBlockquote(): void
-    {
-        $element = $this->style->createBlockquote();
-        $this->assertInstanceOf(BlockquoteElement::class, $element);
-    }
-
-    public function testCreateRating(): void
-    {
-        $element = $this->style->createRating();
-        $this->assertInstanceOf(RatingElement::class, $element);
-    }
-
-    public function testCreateBadge(): void
-    {
-        $element = $this->style->createBadge();
-        $this->assertInstanceOf(BadgeElement::class, $element);
-    }
-
-    public function testCreateSeparator(): void
-    {
-        $element = $this->style->createSeparator();
-        $this->assertInstanceOf(SeparatorElement::class, $element);
-    }
-
-    public function testCreateKeyValue(): void
-    {
-        $element = $this->style->createKeyValue();
-        $this->assertInstanceOf(KeyValueElement::class, $element);
-    }
-
-    public function testCreateTimeline(): void
-    {
-        $element = $this->style->createTimeline();
-        $this->assertInstanceOf(TimelineElement::class, $element);
-    }
-
-    public function testFluentHelperMethods(): void
-    {
-        $result = $this->style
-            ->showBlockquote('Test', 'INFO')
-            ->showRating(5, 3)
-            ->showBadge('TEST')
-            ->showSeparator()
-            ->showKeyValue('Key', 'Value')
-            ->showTimeline([['date' => '2024-01-01', 'event' => 'Test']]);
-
-        $this->assertSame($this->style, $result);
-
-        $output = $this->output->fetch();
-        $this->assertStringContainsString('Test', $output);
-        $this->assertStringContainsString('INFO', $output);
-        $this->assertStringContainsString('●', $output);
-        $this->assertStringContainsString('TEST', $output);
-        $this->assertStringContainsString('-', $output);
-        $this->assertStringContainsString('Key', $output);
-        $this->assertStringContainsString('Value', $output);
-        $this->assertStringContainsString('2024-01-01', $output);
-    }
-
     public function testBackwardCompatibility(): void
     {
         // Test that old API still works exactly the same

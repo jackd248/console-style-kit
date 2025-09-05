@@ -55,9 +55,9 @@ class SeparatorElement extends AbstractStyleElement
         return str_repeat($this->character, $width);
     }
 
-    public static function create(SymfonyStyle $style): self
+    public static function create(SymfonyStyle $style, bool $verboseOnly = false): self
     {
-        return new self($style);
+        return new self($style, $verboseOnly);
     }
 
     public static function line(SymfonyStyle $style, ?int $width = null): self

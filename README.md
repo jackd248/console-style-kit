@@ -46,13 +46,7 @@ use ConsoleStyleKit\Enums\RatingStyle;
 use ConsoleStyleKit\Enums\BadgeColor;
 use ConsoleStyleKit\Enums\LoadingCharacterSet;
 
-// Fluent interface with Enums
-$style->createBlockquote()
-    ->setText('Enhanced blockquote')
-    ->setType(BlockquoteType::WARNING)
-    ->render();
-
-// Static factory methods
+BlockquoteElement::create($style, 'Enhanced blockquote', BlockquoteType::WARNING)->render();
 RatingElement::circle($style, 5, 4, true)->render();
 BadgeElement::create($style, 'CUSTOM')->setColor(BadgeColor::BLUE)->render();
 ```

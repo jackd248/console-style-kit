@@ -32,6 +32,8 @@ use ConsoleStyleKit\Enums\BadgeColor;
 use ConsoleStyleKit\Enums\BlockquoteType;
 use ConsoleStyleKit\Enums\LoadingCharacterSet;
 use ConsoleStyleKit\Enums\RatingStyle;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
 /**
@@ -42,50 +44,59 @@ use Symfony\Component\Console\Style\SymfonyStyle;
  */
 class ConsoleStyleKit extends SymfonyStyle
 {
-    // Legacy methods for backward compatibility
-    public function blockquote(string $text, ?string $type = null): void
-    {
-        $enumType = $type ? BlockquoteType::from($type) : null;
-        BlockquoteElement::create($this, $text, $enumType)->render();
+    protected bool $isVerbose = false;
+
+    public function __construct(
+        InputInterface $input,
+        OutputInterface $output,
+    ) {
+        $this->isVerbose = $output->isVerbose();
+        parent::__construct($input, $output);
     }
 
-    public function rating(int $max, int $current, string $style = 'circle', bool $colorful = false): void
+    public function blockquote(string $text, ?string $type = null, bool $verboseOnly = false): void
+    {
+        $enumType = $type ? BlockquoteType::from($type) : null;
+        BlockquoteElement::create($this, $text, $enumType, $verboseOnly)->render();
+    }
+
+    public function rating(int $max, int $current, string $style = 'circle', bool $colorful = false, bool $verboseOnly = false): void
     {
         $enumStyle = RatingStyle::from($style);
         if (RatingStyle::CIRCLE === $enumStyle) {
-            RatingElement::circle($this, $max, $current, $colorful)->render();
+            RatingElement::circle($this, $max, $current, $colorful, $verboseOnly)->render();
         } else {
-            RatingElement::bar($this, $max, $current, $colorful)->render();
+            RatingElement::bar($this, $max, $current, $colorful, $verboseOnly)->render();
         }
     }
 
-    public function badge(string $text, string $color = 'gray'): void
+    public function badge(string $text, string $color = 'gray', bool $verboseOnly = false): void
     {
         $enumColor = BadgeColor::from($color);
-        BadgeElement::create($this, $text, $enumColor)->render();
+        BadgeElement::create($this, $text, $enumColor, $verboseOnly)->render();
     }
 
-    public function separator(): void
+    public function separator(bool $verboseOnly = false): void
     {
-        SeparatorElement::create($this)->render();
+        SeparatorElement::create($this, $verboseOnly)->render();
     }
 
-    public function keyValue(string $key, string $value, ?string $keyColor = null): void
+    public function keyValue(string $key, string $value, ?string $keyColor = null, bool $verboseOnly = false): void
     {
-        KeyValueElement::create($this, $key, $value, $keyColor)->render();
+        KeyValueElement::create($this, $key, $value, $keyColor, $verboseOnly)->render();
     }
 
     /**
      * @param array<int, array{date: string, event: string}> $events
      */
-    public function timeline(array $events): void
+    public function timeline(array $events, bool $verboseOnly = false): void
     {
-        TimelineElement::create($this, $events)->render();
+        TimelineElement::create($this, $events, $verboseOnly)->render();
     }
 
-    public function loading(string $text = 'Loading', ?int $duration = null, ?string $color = null, LoadingCharacterSet $charSet = LoadingCharacterSet::STARS): LoadingElement
+    public function loading(string $text = 'Loading', ?int $duration = null, ?string $color = null, LoadingCharacterSet $charSet = LoadingCharacterSet::STARS, bool $verboseOnly = false): LoadingElement
     {
-        $element = LoadingElement::create($this, $text)
+        $element = LoadingElement::create($this, $text, $verboseOnly)
             ->setColor($color)
             ->setCharacterSet($charSet);
 
@@ -98,92 +109,5 @@ class ConsoleStyleKit extends SymfonyStyle
         }
 
         return $element;
-    }
-
-    // New OOP API methods
-    public function createBlockquote(): BlockquoteElement
-    {
-        return new BlockquoteElement($this);
-    }
-
-    public function createRating(): RatingElement
-    {
-        return new RatingElement($this);
-    }
-
-    public function createBadge(): BadgeElement
-    {
-        return new BadgeElement($this);
-    }
-
-    public function createSeparator(): SeparatorElement
-    {
-        return new SeparatorElement($this);
-    }
-
-    public function createKeyValue(): KeyValueElement
-    {
-        return new KeyValueElement($this);
-    }
-
-    public function createTimeline(): TimelineElement
-    {
-        return new TimelineElement($this);
-    }
-
-    public function createLoading(): LoadingElement
-    {
-        return new LoadingElement($this);
-    }
-
-    // Fluent helper methods
-    public function showBlockquote(string $text, ?string $type = null): self
-    {
-        $this->blockquote($text, $type);
-
-        return $this;
-    }
-
-    public function showRating(int $max, int $current, string $style = 'circle', bool $colorful = false): self
-    {
-        $this->rating($max, $current, $style, $colorful);
-
-        return $this;
-    }
-
-    public function showBadge(string $text, string $color = 'gray'): self
-    {
-        $this->badge($text, $color);
-
-        return $this;
-    }
-
-    public function showSeparator(): self
-    {
-        $this->separator();
-
-        return $this;
-    }
-
-    public function showKeyValue(string $key, string $value, ?string $keyColor = null): self
-    {
-        $this->keyValue($key, $value, $keyColor);
-
-        return $this;
-    }
-
-    /**
-     * @param array<int, array{date: string, event: string}> $events
-     */
-    public function showTimeline(array $events): self
-    {
-        $this->timeline($events);
-
-        return $this;
-    }
-
-    public function showLoading(string $text = 'Loading', ?int $duration = null, ?string $color = null, LoadingCharacterSet $charSet = LoadingCharacterSet::STARS): LoadingElement
-    {
-        return $this->loading($text, $duration, $color, $charSet);
     }
 }

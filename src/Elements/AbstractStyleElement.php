@@ -33,7 +33,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
  */
 abstract class AbstractStyleElement implements StyleElementInterface, Stringable
 {
-    public function __construct(protected SymfonyStyle $style) {}
+    public function __construct(protected SymfonyStyle $style, protected bool $verboseOnly = false) {}
 
     protected function getTerminalWidth(): int
     {
@@ -50,6 +50,9 @@ abstract class AbstractStyleElement implements StyleElementInterface, Stringable
 
     public function render(): void
     {
+        if ($this->verboseOnly && !$this->style->isVerbose()) {
+            return;
+        }
         $this->style->writeln($this->__toString());
     }
 }

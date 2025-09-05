@@ -135,9 +135,9 @@ class TimelineElement extends AbstractStyleElement
     /**
      * @param array<int, array{date: string, event: string}> $events
      */
-    public static function create(SymfonyStyle $style, array $events = []): self
+    public static function create(SymfonyStyle $style, array $events = [], bool $verboseOnly = false): self
     {
-        return (new self($style))->setEvents($events);
+        return (new self($style, $verboseOnly))->setEvents($events);
     }
 
     /**

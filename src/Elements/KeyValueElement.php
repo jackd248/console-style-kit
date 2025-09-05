@@ -67,9 +67,9 @@ class KeyValueElement extends AbstractStyleElement
         return "<options=bold>{$this->key}</>{$this->separator}{$this->value}";
     }
 
-    public static function create(SymfonyStyle $style, string $key, string $value, ?string $keyColor = null): self
+    public static function create(SymfonyStyle $style, string $key, string $value, ?string $keyColor = null, bool $verboseOnly = false): self
     {
-        return (new self($style))
+        return (new self($style, $verboseOnly))
             ->setKeyValue($key, $value)
             ->setKeyColor($keyColor);
     }

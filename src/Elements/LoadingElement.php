@@ -46,9 +46,9 @@ class LoadingElement extends AbstractStyleElement
     private bool $autoUpdate = false;
     private mixed $tickFunction = null;
 
-    public static function create(SymfonyStyle $style, string $text = 'Loading'): self
+    public static function create(SymfonyStyle $style, string $text = 'Loading', bool $verboseOnly = false): self
     {
-        return (new self($style))->setText($text);
+        return (new self($style, $verboseOnly))->setText($text);
     }
 
     public function setText(string $text): self

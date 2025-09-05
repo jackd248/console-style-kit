@@ -116,21 +116,21 @@ class RatingElement extends AbstractStyleElement
         return 'red';
     }
 
-    public static function create(SymfonyStyle $style, int $max, int $current): self
+    public static function create(SymfonyStyle $style, int $max, int $current, bool $verboseOnly = false): self
     {
-        return (new self($style))->setRating($max, $current);
+        return (new self($style, $verboseOnly))->setRating($max, $current);
     }
 
-    public static function circle(SymfonyStyle $style, int $max, int $current, bool $colorful = false): self
+    public static function circle(SymfonyStyle $style, int $max, int $current, bool $colorful = false, bool $verboseOnly = false): self
     {
-        return self::create($style, $max, $current)
+        return self::create($style, $max, $current, $verboseOnly)
             ->setStyle(RatingStyle::CIRCLE)
             ->setColorful($colorful);
     }
 
-    public static function bar(SymfonyStyle $style, int $max, int $current, bool $colorful = false): self
+    public static function bar(SymfonyStyle $style, int $max, int $current, bool $colorful = false, bool $verboseOnly = false): self
     {
-        return self::create($style, $max, $current)
+        return self::create($style, $max, $current, $verboseOnly)
             ->setStyle(RatingStyle::BAR)
             ->setColorful($colorful);
     }

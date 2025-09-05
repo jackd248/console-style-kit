@@ -31,7 +31,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
  */
 interface StyleElementInterface
 {
-    public function __construct(SymfonyStyle $style);
+    public function __construct(SymfonyStyle $style, bool $verboseOnly = false);
 
     public function render(): void;
 
