@@ -25,8 +25,14 @@ $style = new ConsoleStyleKit(new ArrayInput([]), new ConsoleOutput());
 $style->blockquote('Important message', 'INFO');
 $style->rating(5, 4);
 $style->showBadge('SUCCESS');
-$style->loading('Processing data', 3); // 3 seconds
+$style->loading('Processing data', 3);
+$loading = $style->loading('Processing');
+// ... do work
+$loading->stop();
 ```
+
+> [!Note]
+> Auto-update mode requires `declare(ticks=1)` at the top of your PHP file to enable tick functions. The animation will update automatically on every PHP statement execution, providing smooth animation during long-running operations without any manual intervention. Always call `->start()` after `->enableAutoUpdate()` to ensure proper initialization.
 
 ### Object-Oriented API
 
@@ -49,14 +55,6 @@ $style->createBlockquote()
 // Static factory methods
 RatingElement::circle($style, 5, 4, true)->render();
 BadgeElement::create($style, 'CUSTOM')->setColor(BadgeColor::BLUE)->render();
-
-// Loading animations
-$loading = $style->loading('Processing'); // Manual control
-// ... do work
-$loading->stop();
-
-// Or with fixed duration
-$style->loading('Uploading file', 5, 'green', LoadingCharacterSet::DOTS);
 ```
 
 ### Output Examples
@@ -92,90 +90,6 @@ $style->loading('Uploading file', 5, 'green', LoadingCharacterSet::DOTS);
 - **Key-Value pairs**: With arrows and colors
 - **Timeline**: Multi-event display with custom connectors
 - **Loading animations**: Animated progress indicators with multiple styles and character sets
-
-## 🎬 Loading Animations
-
-The LoadingElement provides animated progress indicators with flexible control:
-
-### Basic Usage
-
-The LoadingElement supports **three different animation modes**:
-
-#### 1. Fixed Duration Mode (Automatic)
-```php
-// Runs for exactly 3 seconds with full animation
-$style->loading('Processing data', 3);
-```
-
-#### 2. Manual Control Mode
-```php
-// Start animation, call update() in your work loop, then stop
-$loading = $style->loading('Uploading file');
-while ($working) {
-    // Your work here
-    doWork();
-    $loading->update(); // Keep animation running
-}
-$loading->stop();
-```
-
-#### 3. Auto-Update Mode (Background)
-```php
-// Add declare(ticks=1) at the top of your PHP file for auto-update to work
-declare(ticks=1);
-
-// Automatic updates during code execution (uses tick functions)
-$loading = $style->loading('Processing')
-    ->enableAutoUpdate()
-    ->start(); // Important: call start() after enableAutoUpdate()
-
-// Animation runs automatically during any code execution
-// Every PHP statement triggers the animation update
-for ($i = 0; $i < 1000; $i++) {
-    performComplexCalculation($i); // Animation updates automatically
-    processData($i);               // No manual update() calls needed
-    saveResults($i);               // Animation continues seamlessly
-}
-$loading->stop();
-```
-
-> **Note**: Auto-update mode requires `declare(ticks=1)` at the top of your PHP file to enable tick functions. The animation will update automatically on every PHP statement execution, providing smooth animation during long-running operations without any manual intervention. Always call `->start()` after `->enableAutoUpdate()` to ensure proper initialization.
-
-### Customization Options
-
-```php
-use ConsoleStyleKit\Enums\LoadingCharacterSet;
-
-// With color and custom character set
-$style->loading('Downloading', 5, 'green', LoadingCharacterSet::DOTS);
-
-// Using object-oriented API
-$loading = LoadingElement::create($style, 'Syncing data')
-    ->setColor('blue')
-    ->setCharacterSet(LoadingCharacterSet::ARROWS)
-    ->hideDots() // Remove trailing dots
-    ->render(); // Start animation
-
-// Stop when done
-$loading->stop();
-```
-
-### Available Character Sets
-
-- **STARS**: `·•*✲✳✶✱✻✽` (Default, mixed star symbols)
-- **BRAILLE**: `⠋⠙⠹⠸⠼⠴⠦⠧⠇⠏` (Smooth animation)
-- **DOTS**: `●○●○●○●○` (Pulsating dots)
-- **ARROWS**: `←↖↑↗→↘↓↙` (Rotating arrows)
-- **BARS**: `|/-\` (Classic rotating bars)
-
-### Factory Methods
-
-```php
-// Quick creation with specific character sets
-$loading = LoadingElement::stars($style, 'Processing')->render();
-$loading = LoadingElement::braille($style, 'Loading')->render();
-$loading = LoadingElement::dots($style, 'Working')->setColor('cyan')->render();
-```
 
 ## 🧑‍💻 Contributing
 

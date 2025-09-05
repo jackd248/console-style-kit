@@ -93,6 +93,7 @@ use ConsoleStyleKit\ConsoleStyleKit;
 use ConsoleStyleKit\Elements\BadgeElement;
 use ConsoleStyleKit\Elements\BlockquoteElement;
 use ConsoleStyleKit\Elements\RatingElement;
+use ConsoleStyleKit\Enums\BlockquoteType;
 use ConsoleStyleKit\Tests\Unit\TestStyleElement;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\BufferedOutput;
@@ -157,7 +158,7 @@ class SimpleTestRunner
         $this->assert(str_contains((string) $result, '|'), 'Blockquote pipe character test');
 
         // Test with type
-        $element = BlockquoteElement::create($style, 'Info test', BlockquoteElement::INFO);
+        $element = BlockquoteElement::create($style, 'Info test', BlockquoteType::INFO);
         $element->render();
 
         $result = $output->fetch();
