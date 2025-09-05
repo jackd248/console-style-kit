@@ -27,7 +27,6 @@ use ConsoleStyleKit\Elements\LoadingElement;
 use ConsoleStyleKit\Elements\RatingElement;
 use ConsoleStyleKit\Enums\BadgeColor;
 use ConsoleStyleKit\Enums\BlockquoteType;
-use ConsoleStyleKit\Enums\LoadingCharacterSet;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\BufferedOutput;
@@ -53,7 +52,7 @@ class ToStringTest extends TestCase
     public function testBlockquoteElementToString(): void
     {
         $element = BlockquoteElement::create($this->style, 'Test message', BlockquoteType::WARNING);
-        $string = $element->toString();
+        $string = (string) $element;
 
         $this->assertStringContainsString('WARNING', $string);
         $this->assertStringContainsString('Test message', $string);
@@ -63,7 +62,7 @@ class ToStringTest extends TestCase
     public function testBadgeElementToString(): void
     {
         $element = BadgeElement::create($this->style, 'SUCCESS', BadgeColor::GREEN);
-        $string = $element->toString();
+        $string = (string) $element;
 
         $this->assertStringContainsString('SUCCESS', $string);
     }
@@ -71,7 +70,7 @@ class ToStringTest extends TestCase
     public function testRatingElementToString(): void
     {
         $element = RatingElement::circle($this->style, 5, 3);
-        $string = $element->toString();
+        $string = (string) $element;
 
         $this->assertStringContainsString('●', $string); // Filled circles
         $this->assertStringContainsString('○', $string); // Empty circles
@@ -80,7 +79,7 @@ class ToStringTest extends TestCase
     public function testLoadingElementToString(): void
     {
         $element = LoadingElement::create($this->style, 'Loading Test');
-        $string = $element->toString();
+        $string = (string) $element;
 
         $this->assertStringContainsString('Loading Test', $string);
         $this->assertStringContainsString('·', $string); // First STARS character
@@ -90,7 +89,7 @@ class ToStringTest extends TestCase
     public function testLoadingElementToStringWithoutDots(): void
     {
         $element = LoadingElement::create($this->style, 'No Dots')->hideDots();
-        $string = $element->toString();
+        $string = (string) $element;
 
         $this->assertStringContainsString('No Dots', $string);
         $this->assertStringNotContainsString('…', $string);
@@ -99,7 +98,7 @@ class ToStringTest extends TestCase
     public function testLoadingElementToStringWithColor(): void
     {
         $element = LoadingElement::create($this->style, 'Colored')->setColor('red');
-        $string = $element->toString();
+        $string = (string) $element;
 
         $this->assertStringContainsString('<fg=red>', $string);
         $this->assertStringContainsString('Colored', $string);
@@ -111,9 +110,9 @@ class ToStringTest extends TestCase
 
         // Test magic __toString() method
         $magicString = (string) $element;
-        $normalString = $element->toString();
+        $directString = $element->__toString();
 
-        $this->assertSame($normalString, $magicString);
+        $this->assertSame($directString, $magicString);
         $this->assertStringContainsString('MAGIC', $magicString);
     }
 

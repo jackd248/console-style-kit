@@ -59,7 +59,7 @@ class BlockquoteElement extends AbstractStyleElement
 
             $result = "\n<fg={$color}{$bold}>|</> <fg={$color}{$bold}>{$this->type->value}</>\n";
             $result .= "<fg={$color}>|</> {$this->text}\n";
-            
+
             return $result;
         }
     }

@@ -31,9 +31,9 @@ use ConsoleStyleKit\Elements\AbstractStyleElement;
  */
 class TestStyleElement extends AbstractStyleElement
 {
-    public function render(): void
+    public function __toString(): string
     {
-        $this->style->writeln('test output');
+        return 'test output';
     }
 
     public function getTerminalWidthPublic(): int

@@ -73,8 +73,8 @@ for ($i = 0; $i < 250; ++$i) {
     $array = range(1, 10);
     $sum = array_sum($array);
     $product = array_product(range(1, 3));
-    $filtered = array_filter($array, fn($x) => $x > 5);
-    $mapped = array_map(fn($x) => $x * 2, range(1, 5));
+    $filtered = array_filter($array, fn ($x) => $x > 5);
+    $mapped = array_map(fn ($x) => $x * 2, range(1, 5));
 
     // KEINE echo statements hier - die würden die Animation stören!
 
