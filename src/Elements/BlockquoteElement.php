@@ -51,21 +51,17 @@ class BlockquoteElement extends AbstractStyleElement
 
     public function __toString(): string
     {
-        $result = "\n";
-
         if (null === $this->type) {
-            $result .= '<fg=gray>|</> '.$this->text;
+            return "\n<fg=gray>|</> {$this->text}\n";
         } else {
             $color = $this->type->getColor();
             $bold = $this->type->isBold() ? ';options=bold' : '';
 
-            $result .= "<fg={$color}{$bold}>|</> <fg={$color}{$bold}>{$this->type->value}</>";
-            $result .= "<fg={$color}>|</> {$this->text}";
+            $result = "\n<fg={$color}{$bold}>|</> <fg={$color}{$bold}>{$this->type->value}</>\n";
+            $result .= "<fg={$color}>|</> {$this->text}\n";
+            
+            return $result;
         }
-
-        $result .= "\n";
-
-        return $result;
     }
 
     public static function create(SymfonyStyle $style, string $text, BlockquoteType|string|null $type = null): self
