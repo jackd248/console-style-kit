@@ -24,22 +24,14 @@ namespace ConsoleStyleKit\Elements;
 use ConsoleStyleKit\Enums\BlockquoteType;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
-
 /**
+ * BlockquoteElement.
+ *
  * @author Konrad Michalik <hej@konradmichalik.dev>
  * @license GPL-3.0-or-later
- *
- * @package ConsoleStyleKit
  */
 class BlockquoteElement extends AbstractStyleElement
 {
-    // Legacy constants for backward compatibility
-    public const INFO = 'INFO';
-    public const TIP = 'TIP';
-    public const IMPORTANT = 'IMPORTANT';
-    public const WARNING = 'WARNING';
-    public const CAUTION = 'CAUTION';
-
     private string $text;
     private ?BlockquoteType $type = null;
 

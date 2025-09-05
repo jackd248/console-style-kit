@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e5884b724c84c869ec8941dd3baafc6f",
+    "content-hash": "26b806a14bf9757224c00e9e6c5bb51b",
     "packages": [
         {
             "name": "psr/container",
@@ -1994,16 +1994,16 @@
         },
         {
             "name": "konradmichalik/php-doc-block-header-fixer",
-            "version": "0.1.0",
+            "version": "0.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/jackd248/php-doc-block-header-fixer.git",
-                "reference": "ba41a5a3619739bece0045dcb91db8e92883897d"
+                "reference": "d43f5a562a6fdb15a690ebb2a7b8c6cb966146e8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jackd248/php-doc-block-header-fixer/zipball/ba41a5a3619739bece0045dcb91db8e92883897d",
-                "reference": "ba41a5a3619739bece0045dcb91db8e92883897d",
+                "url": "https://api.github.com/repos/jackd248/php-doc-block-header-fixer/zipball/d43f5a562a6fdb15a690ebb2a7b8c6cb966146e8",
+                "reference": "d43f5a562a6fdb15a690ebb2a7b8c6cb966146e8",
                 "shasum": ""
             },
             "require": {
@@ -2038,11 +2038,21 @@
                     "role": "Maintainer"
                 }
             ],
+            "description": "This package contains a PHP-CS-Fixer rule to automatically fix the class header regarding PHP DocBlocks.",
+            "keywords": [
+                "Coding Standard",
+                "docblock",
+                "fixer",
+                "header",
+                "php",
+                "php-cs-fixer",
+                "phpdoc"
+            ],
             "support": {
                 "issues": "https://github.com/jackd248/php-doc-block-header-fixer/issues",
-                "source": "https://github.com/jackd248/php-doc-block-header-fixer/tree/0.1.0"
+                "source": "https://github.com/jackd248/php-doc-block-header-fixer/tree/0.2.0"
             },
-            "time": "2025-08-08T08:12:48+00:00"
+            "time": "2025-09-04T18:53:14+00:00"
         },
         {
             "name": "localheinz/diff",

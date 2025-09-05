@@ -23,12 +23,11 @@ namespace ConsoleStyleKit\Tests\Unit;
 
 use ConsoleStyleKit\Elements\AbstractStyleElement;
 
-
 /**
+ * TestStyleElement.
+ *
  * @author Konrad Michalik <hej@konradmichalik.dev>
  * @license GPL-3.0-or-later
- *
- * @package ConsoleStyleKit
  */
 class TestStyleElement extends AbstractStyleElement
 {

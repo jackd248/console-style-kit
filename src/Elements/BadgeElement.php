@@ -24,23 +24,14 @@ namespace ConsoleStyleKit\Elements;
 use ConsoleStyleKit\Enums\BadgeColor;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
-
 /**
+ * BadgeElement.
+ *
  * @author Konrad Michalik <hej@konradmichalik.dev>
  * @license GPL-3.0-or-later
- *
- * @package ConsoleStyleKit
  */
 class BadgeElement extends AbstractStyleElement
 {
-    // Legacy constants for backward compatibility
-    public const COLOR_GREEN = 'green';
-    public const COLOR_BLUE = 'blue';
-    public const COLOR_YELLOW = 'yellow';
-    public const COLOR_RED = 'red';
-    public const COLOR_MAGENTA = 'magenta';
-    public const COLOR_GRAY = 'gray';
-
     private string $text;
     private BadgeColor $color = BadgeColor::GRAY;
 

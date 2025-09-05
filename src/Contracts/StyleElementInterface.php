@@ -23,6 +23,13 @@ namespace ConsoleStyleKit\Contracts;
 
 use Symfony\Component\Console\Style\SymfonyStyle;
 
+
+/**
+ * StyleElementInterface.
+ *
+ * @author Konrad Michalik <hej@konradmichalik.dev>
+ * @license GPL-3.0-or-later
+ */
 interface StyleElementInterface
 {
     public function __construct(SymfonyStyle $style);

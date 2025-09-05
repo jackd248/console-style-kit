@@ -24,30 +24,24 @@ namespace ConsoleStyleKit;
 use ConsoleStyleKit\Elements\BadgeElement;
 use ConsoleStyleKit\Elements\BlockquoteElement;
 use ConsoleStyleKit\Elements\KeyValueElement;
+use ConsoleStyleKit\Elements\LoadingElement;
 use ConsoleStyleKit\Elements\RatingElement;
 use ConsoleStyleKit\Elements\SeparatorElement;
 use ConsoleStyleKit\Elements\TimelineElement;
 use ConsoleStyleKit\Enums\BadgeColor;
 use ConsoleStyleKit\Enums\BlockquoteType;
+use ConsoleStyleKit\Enums\LoadingCharacterSet;
 use ConsoleStyleKit\Enums\RatingStyle;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
-
 /**
+ * ConsoleStyleKit.
+ *
  * @author Konrad Michalik <hej@konradmichalik.dev>
  * @license GPL-3.0-or-later
- *
- * @package ConsoleStyleKit
  */
 class ConsoleStyleKit extends SymfonyStyle
 {
-    // Legacy constants for backward compatibility
-    public const INFO = 'INFO';
-    public const TIP = 'TIP';
-    public const IMPORTANT = 'IMPORTANT';
-    public const WARNING = 'WARNING';
-    public const CAUTION = 'CAUTION';
-
     // Legacy methods for backward compatibility
     public function blockquote(string $text, ?string $type = null): void
     {
@@ -89,6 +83,23 @@ class ConsoleStyleKit extends SymfonyStyle
         TimelineElement::create($this, $events)->render();
     }
 
+    public function loading(string $text = 'Loading', ?int $duration = null, ?string $color = null, LoadingCharacterSet $charSet = LoadingCharacterSet::STARS): LoadingElement
+    {
+        $element = LoadingElement::create($this, $text)
+            ->setColor($color)
+            ->setCharacterSet($charSet);
+
+        if (null !== $duration) {
+            // Fixed duration mode - render and return element for potential chaining
+            $element->render($duration);
+        } else {
+            // Manual mode - DON'T start automatically, let user call enableAutoUpdate() first
+            // The user can call ->start() or ->enableAutoUpdate() after this
+        }
+
+        return $element;
+    }
+
     // New OOP API methods
     public function createBlockquote(): BlockquoteElement
     {
@@ -118,6 +129,11 @@ class ConsoleStyleKit extends SymfonyStyle
     public function createTimeline(): TimelineElement
     {
         return new TimelineElement($this);
+    }
+
+    public function createLoading(): LoadingElement
+    {
+        return new LoadingElement($this);
     }
 
     // Fluent helper methods
@@ -164,5 +180,10 @@ class ConsoleStyleKit extends SymfonyStyle
         $this->timeline($events);
 
         return $this;
+    }
+
+    public function showLoading(string $text = 'Loading', ?int $duration = null, ?string $color = null, LoadingCharacterSet $charSet = LoadingCharacterSet::STARS): LoadingElement
+    {
+        return $this->loading($text, $duration, $color, $charSet);
     }
 }

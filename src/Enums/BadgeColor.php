@@ -21,6 +21,13 @@
 
 namespace ConsoleStyleKit\Enums;
 
+
+/**
+ * BadgeColor.
+ *
+ * @author Konrad Michalik <hej@konradmichalik.dev>
+ * @license GPL-3.0-or-later
+ */
 enum BadgeColor: string
 {
     case GREEN = 'green';

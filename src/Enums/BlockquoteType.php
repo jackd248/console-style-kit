@@ -21,6 +21,13 @@
 
 namespace ConsoleStyleKit\Enums;
 
+
+/**
+ * BlockquoteType.
+ *
+ * @author Konrad Michalik <hej@konradmichalik.dev>
+ * @license GPL-3.0-or-later
+ */
 enum BlockquoteType: string
 {
     case INFO = 'INFO';

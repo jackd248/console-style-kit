@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Composer plugin "console-style-kit".
  *
@@ -19,33 +21,33 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-namespace ConsoleStyleKit\Elements;
-
-use ConsoleStyleKit\Contracts\StyleElementInterface;
-use Symfony\Component\Console\Style\SymfonyStyle;
+namespace ConsoleStyleKit\Enums;
 
 /**
- * AbstractStyleElement.
+ * LoadingCharacterSet.
  *
  * @author Konrad Michalik <hej@konradmichalik.dev>
  * @license GPL-3.0-or-later
  */
-abstract class AbstractStyleElement implements StyleElementInterface
+enum LoadingCharacterSet: string
 {
-    public function __construct(protected SymfonyStyle $style) {}
+    case STARS = 'stars';
+    case BRAILLE = 'braille';
+    case DOTS = 'dots';
+    case ARROWS = 'arrows';
+    case BARS = 'bars';
 
-    protected function getTerminalWidth(): int
+    /**
+     * @return array<int, string>
+     */
+    public function getChars(): array
     {
-        if (function_exists('exec')) {
-            $output = [];
-            exec('tput cols 2>/dev/null', $output);
-            if (!empty($output[0]) && is_numeric($output[0])) {
-                return (int) $output[0];
-            }
-        }
-
-        return 80; // fallback
+        return match ($this) {
+            self::STARS => ['·', '•', '*', '✲', '✳', '✶', '✱', '✻', '✽'],
+            self::BRAILLE => ['⠋', '⠙', '⠹', '⠸', '⠼', '⠴', '⠦', '⠧', '⠇', '⠏'],
+            self::DOTS => ['●', '●', '●', '●', '●', ' ', ' ', ' ', ' ', ''],
+            self::ARROWS => ['←', '↖', '↑', '↗', '→', '↘', '↓', '↙'],
+            self::BARS => ['|', '/', '-', '\\'],
+        };
     }
-
-    abstract public function render(): void;
 }

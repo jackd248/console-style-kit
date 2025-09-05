@@ -24,19 +24,14 @@ namespace ConsoleStyleKit\Elements;
 use ConsoleStyleKit\Enums\RatingStyle;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
-
 /**
+ * RatingElement.
+ *
  * @author Konrad Michalik <hej@konradmichalik.dev>
  * @license GPL-3.0-or-later
- *
- * @package ConsoleStyleKit
  */
 class RatingElement extends AbstractStyleElement
 {
-    // Legacy constants for backward compatibility
-    public const STYLE_CIRCLE = 'circle';
-    public const STYLE_BAR = 'bar';
-
     private int $max;
     private int $current;
     private RatingStyle $displayStyle = RatingStyle::CIRCLE;

@@ -32,12 +32,11 @@ use PHPUnit\Framework\TestCase;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\BufferedOutput;
 
-
 /**
+ * ConsoleStyleKitTest.
+ *
  * @author Konrad Michalik <hej@konradmichalik.dev>
  * @license GPL-3.0-or-later
- *
- * @package ConsoleStyleKit
  */
 class ConsoleStyleKitTest extends TestCase
 {
@@ -50,14 +49,6 @@ class ConsoleStyleKitTest extends TestCase
         $this->style = new ConsoleStyleKit(new ArrayInput([]), $this->output);
     }
 
-    public function testLegacyConstants(): void
-    {
-        $this->assertSame('INFO', ConsoleStyleKit::INFO);
-        $this->assertSame('TIP', ConsoleStyleKit::TIP);
-        $this->assertSame('IMPORTANT', ConsoleStyleKit::IMPORTANT);
-        $this->assertSame('WARNING', ConsoleStyleKit::WARNING);
-        $this->assertSame('CAUTION', ConsoleStyleKit::CAUTION);
-    }
 
     public function testLegacyBlockquote(): void
     {
@@ -173,7 +164,7 @@ class ConsoleStyleKitTest extends TestCase
     public function testBackwardCompatibility(): void
     {
         // Test that old API still works exactly the same
-        $this->style->blockquote('Legacy test', ConsoleStyleKit::WARNING);
+        $this->style->blockquote('Legacy test', 'WARNING');
         $this->style->rating(5, 4, 'bar', true);
         $this->style->badge('OLD', 'red');
 

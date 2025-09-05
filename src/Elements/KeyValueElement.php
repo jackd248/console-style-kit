@@ -23,12 +23,11 @@ namespace ConsoleStyleKit\Elements;
 
 use Symfony\Component\Console\Style\SymfonyStyle;
 
-
 /**
+ * KeyValueElement.
+ *
  * @author Konrad Michalik <hej@konradmichalik.dev>
  * @license GPL-3.0-or-later
- *
- * @package ConsoleStyleKit
  */
 class KeyValueElement extends AbstractStyleElement
 {
