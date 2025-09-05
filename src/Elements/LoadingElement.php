@@ -214,7 +214,7 @@ class LoadingElement extends AbstractStyleElement
         return $this->isRunning;
     }
 
-    public function toString(): string
+    public function __toString(): string
     {
         // For LoadingElement, return a single frame representation
         // since full animation doesn't make sense in string form

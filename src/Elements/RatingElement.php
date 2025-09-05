@@ -59,15 +59,15 @@ class RatingElement extends AbstractStyleElement
         return $this;
     }
 
-    public function render(): void
+    public function __toString(): string
     {
-        match ($this->displayStyle) {
-            RatingStyle::CIRCLE => $this->renderCircle(),
-            RatingStyle::BAR => $this->renderBar(),
+        return match ($this->displayStyle) {
+            RatingStyle::CIRCLE => $this->generateCircle(),
+            RatingStyle::BAR => $this->generateBar(),
         };
     }
 
-    private function renderCircle(): void
+    private function generateCircle(): string
     {
         $circles = [];
 
@@ -84,20 +84,21 @@ class RatingElement extends AbstractStyleElement
             }
         }
 
-        $this->style->writeln(implode(' ', $circles));
+        return implode(' ', $circles);
     }
 
-    private function renderBar(): void
+    private function generateBar(): string
     {
         $filled = str_repeat('#', $this->current);
         $empty = str_repeat('-', $this->max - $this->current);
 
         if ($this->colorful) {
             $color = $this->getRatingColor($this->current, $this->max);
-            $this->style->writeln("[<fg={$color}>{$filled}</><fg=gray>{$empty}</>]");
-        } else {
-            $this->style->writeln("[<fg=white>{$filled}</><fg=gray>{$empty}</>]");
+
+            return "[<fg={$color}>{$filled}</><fg=gray>{$empty}</>]";
         }
+
+        return "[<fg=white>{$filled}</><fg=gray>{$empty}</>]";
     }
 
     private function getRatingColor(int $current, int $max): string
@@ -106,11 +107,13 @@ class RatingElement extends AbstractStyleElement
 
         if ($percentage >= 0.8) {
             return 'green';
-        } elseif ($percentage >= 0.5) {
-            return 'yellow';
-        } else {
-            return 'red';
         }
+
+        if ($percentage >= 0.5) {
+            return 'yellow';
+        }
+
+        return 'red';
     }
 
     public static function create(SymfonyStyle $style, int $max, int $current): self

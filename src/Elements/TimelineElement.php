@@ -159,4 +159,9 @@ class TimelineElement extends AbstractStyleElement
             ->setConnector('★')
             ->setLine('─');
     }
+
+    public function __toString(): string
+    {
+        return 'ToDo';
+    }
 }

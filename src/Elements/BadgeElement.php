@@ -49,11 +49,6 @@ class BadgeElement extends AbstractStyleElement
         return $this;
     }
 
-    public function render(): void
-    {
-        $this->style->writeln("<bg={$this->color->value};fg=white> {$this->text} </>");
-    }
-
     public static function create(SymfonyStyle $style, string $text, BadgeColor|string $color = BadgeColor::GRAY): self
     {
         return (new self($style))
@@ -79,5 +74,10 @@ class BadgeElement extends AbstractStyleElement
     public static function error(SymfonyStyle $style, string $text): self
     {
         return self::create($style, $text, BadgeColor::RED);
+    }
+
+    public function __toString(): string
+    {
+        return "<bg={$this->color->value};fg=white> {$this->text} </>";
     }
 }

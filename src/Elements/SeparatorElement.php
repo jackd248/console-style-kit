@@ -48,10 +48,11 @@ class SeparatorElement extends AbstractStyleElement
         return $this;
     }
 
-    public function render(): void
+    public function __toString(): string
     {
         $width = $this->width ?? $this->getTerminalWidth();
-        $this->style->writeln(str_repeat($this->character, $width));
+
+        return str_repeat($this->character, $width);
     }
 
     public static function create(SymfonyStyle $style): self

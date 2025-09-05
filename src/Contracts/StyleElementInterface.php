@@ -35,5 +35,5 @@ interface StyleElementInterface
 
     public function render(): void;
 
-    public function toString(): string;
+    public function __toString(): string;
 }
