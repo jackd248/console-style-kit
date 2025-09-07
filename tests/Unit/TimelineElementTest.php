@@ -109,6 +109,7 @@ class TimelineElementTest extends TestCase
     {
         $element = new TimelineElement($this->style);
         $element->addEvent('2024-01-01', 'Test')
+                ->addEvent('2024-02-01', 'Test2')
                 ->setLine('=')
                 ->render();
 

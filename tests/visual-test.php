@@ -53,6 +53,7 @@ use ConsoleStyleKit\Elements\TimelineElement;
 use ConsoleStyleKit\Enums\BadgeColor;
 use ConsoleStyleKit\Enums\BlockquoteType;
 use ConsoleStyleKit\Enums\LoadingCharacterSet;
+use ConsoleStyleKit\Enums\TimelineOrientation;
 use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\Console\Output\ConsoleOutput;
 
@@ -230,6 +231,14 @@ $shortEvents = [
 ];
 
 TimelineElement::create($style, $shortEvents)->render();
+
+$style->text('🔸 Vertikale Timeline:');
+$verticalEvents = [
+    ['date' => '2025-01-01', 'event' => 'Start'],
+    ['date' => '2025-02-15', 'event' => 'Meilenstein'],
+    ['date' => '2025-03-01', 'event' => 'Abschluss'],
+];
+TimelineElement::vertical($style, $verticalEvents)->render();
 $style->newLine();
 
 // =============================================================================
