@@ -51,17 +51,100 @@ class BlockquoteElement extends AbstractStyleElement
 
     public function __toString(): string
     {
+        $wrappedText = $this->wrapText($this->text);
+
         if (null === $this->type) {
-            return "\n<fg=gray>|</> {$this->text}\n";
-        } else {
-            $color = $this->type->getColor();
-            $bold = $this->type->isBold() ? ';options=bold' : '';
-
-            $result = "\n<fg={$color}{$bold}>|</> <fg={$color}{$bold}>{$this->type->value}</>\n";
-            $result .= "<fg={$color}>|</> {$this->text}\n";
-
-            return $result;
+            return $this->formatLinesWithBorders($wrappedText, 'gray');
         }
+
+        $color = $this->type->getColor();
+        $bold = $this->type->isBold() ? ';options=bold' : '';
+
+        $result = "<fg={$color}>╷</>\n";
+        $result .= "<fg={$color}{$bold}>│</> <fg={$color}{$bold}>{$this->type->value}</>\n";
+        $result .= $this->formatLines($wrappedText, $color)."\n";
+        $result .= "<fg={$color}>╵</>";
+
+        return $result;
+    }
+
+    /**
+     * @return array<string>
+     */
+    private function wrapText(string $text, int $maxWidth = 70): array
+    {
+        // First, split by explicit line breaks
+        $paragraphs = explode("\n", $text);
+        $lines = [];
+
+        foreach ($paragraphs as $paragraph) {
+            // Handle empty lines (double \n creates empty paragraphs)
+            if ('' === trim($paragraph)) {
+                $lines[] = '';
+                continue;
+            }
+
+            // Word wrap each paragraph
+            $words = explode(' ', trim($paragraph));
+            $currentLine = '';
+
+            foreach ($words as $word) {
+                if (empty($currentLine)) {
+                    $currentLine = $word;
+                } elseif (strlen($currentLine.' '.$word) <= $maxWidth) {
+                    $currentLine .= ' '.$word;
+                } else {
+                    $lines[] = $currentLine;
+                    $currentLine = $word;
+                }
+            }
+
+            if (!empty($currentLine)) {
+                $lines[] = $currentLine;
+            }
+        }
+
+        return empty($lines) ? [''] : $lines;
+    }
+
+    /**
+     * @param array<string> $lines
+     */
+    private function formatLines(array $lines, string $color): string
+    {
+        $result = '';
+        foreach ($lines as $line) {
+            $result .= "<fg={$color}>│</> {$line}\n";
+        }
+
+        return rtrim($result, "\n");
+    }
+
+    /**
+     * @param array<string> $lines
+     */
+    private function formatLinesWithBorders(array $lines, string $color): string
+    {
+        if (empty($lines)) {
+            return "<fg={$color}>╷</>\n<fg={$color}>╵</>";
+        }
+
+        $result = "<fg={$color}>╷</>\n";
+        foreach ($lines as $line) {
+            $result .= "<fg={$color}>│</> {$line}\n";
+        }
+        $result .= "<fg={$color}>╵</>";
+
+        return $result;
+    }
+
+    public function render(): void
+    {
+        if ($this->verboseOnly && !$this->style->isVerbose()) {
+            return;
+        }
+        $this->style->newLine();
+        $this->style->writeln($this->__toString());
     }
 
     public static function create(SymfonyStyle $style, string $text, BlockquoteType|string|null $type = null, bool $verboseOnly = false): self

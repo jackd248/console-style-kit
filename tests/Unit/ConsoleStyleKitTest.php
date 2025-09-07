@@ -22,12 +22,6 @@
 namespace ConsoleStyleKit\Tests\Unit;
 
 use ConsoleStyleKit\ConsoleStyleKit;
-use ConsoleStyleKit\Elements\BadgeElement;
-use ConsoleStyleKit\Elements\BlockquoteElement;
-use ConsoleStyleKit\Elements\KeyValueElement;
-use ConsoleStyleKit\Elements\RatingElement;
-use ConsoleStyleKit\Elements\SeparatorElement;
-use ConsoleStyleKit\Elements\TimelineElement;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\BufferedOutput;
@@ -55,7 +49,9 @@ class ConsoleStyleKitTest extends TestCase
         $output = $this->output->fetch();
 
         $this->assertStringContainsString('Test message', $output);
-        $this->assertStringContainsString('|', $output);
+        $this->assertStringContainsString('│', $output);
+        $this->assertStringContainsString('╷', $output); // top border
+        $this->assertStringContainsString('╵', $output); // bottom border
     }
 
     public function testLegacyRating(): void

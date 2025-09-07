@@ -53,11 +53,11 @@ use ConsoleStyleKit\Elements\TimelineElement;
 use ConsoleStyleKit\Enums\BadgeColor;
 use ConsoleStyleKit\Enums\BlockquoteType;
 use ConsoleStyleKit\Enums\LoadingCharacterSet;
-use Symfony\Component\Console\Input\ArrayInput;
+use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\Console\Output\ConsoleOutput;
 
 // Create console style instance
-$input = new ArrayInput([]);
+$input = new ArgvInput();
 $output = new ConsoleOutput();
 $style = new ConsoleStyleKit($input, $output);
 
@@ -78,6 +78,7 @@ $blockquoteTypes = [
     ['IMPORTANT', BlockquoteType::IMPORTANT, 'Wichtiger Hinweis, den Sie beachten sollten'],
     ['WARNING', BlockquoteType::WARNING, 'Warnung: Diese Aktion kann nicht rückgängig gemacht werden'],
     ['CAUTION', BlockquoteType::CAUTION, 'Vorsicht bei der Ausführung dieses Befehls'],
+    ['LONG_TEXT', BlockquoteType::INFO, 'Dies ist ein sehr langer Text der über mehrere Zeilen geht und demonstriert wie der intelligente Zeilenumbruch funktioniert. Der Text sollte korrekt umgebrochen werden ohne Wörter zu trennen und dabei sollte jede Zeile den vertikalen Strich am Anfang behalten.'],
 ];
 
 foreach ($blockquoteTypes as [$name, $type, $text]) {
@@ -88,6 +89,10 @@ foreach ($blockquoteTypes as [$name, $type, $text]) {
 
 $style->text('🔸 Ohne Typ:');
 BlockquoteElement::create($style, 'Einfache Blockquote ohne spezifischen Typ')->render();
+
+$style->text('🔸 Mit Linebreaks:');
+$textWithBreaks = "Erste Zeile der Blockquote\nZweite Zeile nach Linebreak\n\nNeuer Absatz nach Leerzeile";
+BlockquoteElement::create($style, $textWithBreaks, BlockquoteType::TIP)->render();
 $style->newLine();
 
 // =============================================================================
@@ -296,6 +301,28 @@ $buildStats = [
 foreach ($buildStats as [$key, $value]) {
     KeyValueElement::create($style, $key, $value)->render();
 }
+
+$style->newLine();
+SeparatorElement::create($style)->render();
+
+// =============================================================================
+// 9. VERBOSE-ONLY ELEMENTS
+// =============================================================================
+
+$style->section('🔇 Verbose-Only Elements');
+
+$style->text('🔸 Diese Elemente sind nur im verbose Modus sichtbar (-v):');
+$style->text('   Führe aus: php tests/visual-test.php -v');
+
+// These elements will only show in verbose mode
+BlockquoteElement::create($style, 'Diese Nachricht erscheint nur im verbose Modus', BlockquoteType::INFO, true)->render();
+BadgeElement::create($style, 'VERBOSE', BadgeColor::BLUE, true)->render();
+KeyValueElement::create($style, 'Verbose Info', 'Nur bei -v Flag sichtbar', 'blue', true)->render();
+RatingElement::circle($style, 5, 3, true, true)->render();
+
+$style->text('🔸 Mixed Visibility:');
+$style->text('   Normal: '.BadgeElement::success($style, 'VISIBLE'));
+$style->text('   Verbose: '.BadgeElement::create($style, 'HIDDEN', BadgeColor::RED, true));
 
 $style->newLine();
 SeparatorElement::create($style)->render();

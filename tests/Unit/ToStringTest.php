@@ -56,7 +56,9 @@ class ToStringTest extends TestCase
 
         $this->assertStringContainsString('WARNING', $string);
         $this->assertStringContainsString('Test message', $string);
-        $this->assertStringContainsString('|', $string);
+        $this->assertStringContainsString('│', $string);
+        $this->assertStringContainsString('╷', $string); // top border
+        $this->assertStringContainsString('╵', $string); // bottom border
     }
 
     public function testBadgeElementToString(): void

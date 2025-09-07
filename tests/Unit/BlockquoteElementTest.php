@@ -52,7 +52,9 @@ class BlockquoteElementTest extends TestCase
 
         $output = $this->output->fetch();
         $this->assertStringContainsString('Test blockquote', $output);
-        $this->assertStringContainsString('|', $output);
+        $this->assertStringContainsString('│', $output);
+        $this->assertStringContainsString('╷', $output); // top border
+        $this->assertStringContainsString('╵', $output); // bottom border
     }
 
     public function testBlockquoteWithType(): void
@@ -63,6 +65,8 @@ class BlockquoteElementTest extends TestCase
         $output = $this->output->fetch();
         $this->assertStringContainsString('Info message', $output);
         $this->assertStringContainsString('INFO', $output);
+        $this->assertStringContainsString('╷', $output); // top border
+        $this->assertStringContainsString('╵', $output); // bottom border
     }
 
     public function testFluentInterface(): void
