@@ -3,6 +3,7 @@
 	"description": "Symfony Console Style Helper Extensions",
 	"license": "GPL-3.0-or-later",
 	"type": "library",
+	"version": "0.1.0",
 	"authors": [
 		{
 			"name": "Konrad Michalik",
